@@ -12,8 +12,8 @@ class VacationAutoResponder:
         self.email_id = email_id
         self.reply = reply
         self.fernet = Fernet(Fernet.generate_key())
+        #password encrypted  and stored within object
         self.password = self.fernet.encrypt(getpass("Password: ").encode())
-        # print(self.fernet.decrypt(self.password).decode())
 
     def login(self):
         imap = imaplib.IMAP4_SSL('imap.gmail.com')
@@ -64,8 +64,8 @@ class VacationAutoResponder:
             if data == None or data[0] == None:
                 continue
             message = email.message_from_bytes(data[0][1])
-            # print(message["From"], message["Subject"])
             sender, subject = self.convert_to_string(message["From"]), self.convert_to_string(message["Subject"])
+            # check sender and subject for no reply terms
             if self.is_no_reply(sender, subject):
                 #no reply mails are lef as it is
                 imap.store(num, '+X-GM-LABELS', 'Vacation-NoReply')
@@ -77,6 +77,7 @@ class VacationAutoResponder:
                 print(f"Sent auto reply to {sender}")
                 imap.store(num, '+X-GM-LABELS', 'Vacation-Replied')
                 imap.copy(num, 'Vacation-Replied')
+            # remove from inbox
             imap.store(num, '+FLAGS', '\\Deleted')
             imap.expunge()
             
