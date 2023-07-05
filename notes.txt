@@ -1,0 +1,24 @@
+Build a vacation auto responder application that has the following functionalities:
+● Checks for new emails in any given Gmail ID.
+● Replies to emails that have no prior replies.
+● Adds a label to the replied email and moves the email to the label.
+● Repeats tasks in random intervals of 45 to 120 secs.
+● Ensure no double replies are sent to any email at any point of time.
+
+Flow:
+1. user provides credentials
+2. Login
+3. Fetch the mails(Remove no reply mails and only mails received from the start date of code run)
+4. Reply to the mails
+5. Change Label and remove from inbox
+6. Logout
+7. Repeat 2-6
+
+To Note: 
+Password should be hidden when user enters it and save the encrypted Password
+
+Further Improvements that can be done
+1. Send replies in a bulk to make system faster
+2. Make the no-reply identification logic stronger and maybe implement an ml model to do the same
+3. More improvements in security
+
